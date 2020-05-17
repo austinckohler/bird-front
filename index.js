@@ -20,20 +20,28 @@ fetch(birdsURL)
             const age = document.createElement("li")
             const size = document.createElement("li")
             const button = document.createElement("button")
+            const editButton = document.createElement("button")
             
             species.textContent = bird.species
             age.textContent = bird.age
             size.textContent = bird.size
             button.textContent = "Delete"
-                
+            editButton.textContent = "Edit"
+
             button.addEventListener('click', () =>{
                 birdCard.remove()
                 fetch(birdsURL + bird.id, {
                     method: "DELETE"
                 })
                 })
+            editButton.addEventListener('click', () =>{
+                editSpecies.value = bird.species
+                editAge.value = bird.age
+                editSize.value = bird.size
+                id.value = bird.id
+                })
 
-            birdCard.append(species, ul, age, size, button)
+            birdCard.append(species, ul, age, size, button, editButton)
             document.body.append(birdCard)        
         });
     }
@@ -50,6 +58,27 @@ newBird.addEventListener('submit', (event)=> {
 
     fetch(birdsURL, {
         method: "POST",
+        headers: {
+            'content-type': 'application/json',
+            'accept': 'application/json'
+        },
+        body: JSON.stringify(bird)
+    })
+})
+
+editBird.addEventListener('submit', (event)=> {
+    event.preventDefault()
+    const formData = new FormData(event.target)
+    const species = formData.get('species')
+    const age = formData.get('age')
+    const size = formData.get('size')
+    const id = formData.get('id')
+    const bird = {species, age, size}
+    
+   showBirds(bird)
+
+    fetch(birdsURL + id, {
+        method: "PATCH",
         headers: {
             'content-type': 'application/json',
             'accept': 'application/json'
