@@ -1,4 +1,3 @@
-console.log("h1")
 const birdsURL = 'http://localhost:3000/birds/'
 const ul = document.createElement('ul')
 const newBird = document.querySelector("#new-bird")
@@ -22,8 +21,8 @@ fetch(birdsURL)
             const editButton = document.createElement("button")
             
             species.textContent = bird.species
-            age.textContent = bird.age
-            size.textContent = bird.size
+            age.textContent = "Age:" + " " + bird.age
+            size.textContent = "Size:" + " " + bird.size
             button.textContent = "Delete"
             editButton.textContent = "Edit"
 
