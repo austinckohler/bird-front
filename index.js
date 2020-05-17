@@ -11,10 +11,9 @@ const id = document.querySelector("#id")
 
 fetch(birdsURL)
     .then(response => response.json())
-    .then(showBirds)
+    .then(birds => birds.map(showBirds))
 
-    function showBirds(birds) {
-        birds.forEach(bird => {
+    function showBirds(bird) {
             const birdCard = document.createElement("div")
             const species = document.createElement("h2")
             const age = document.createElement("li")
@@ -43,7 +42,6 @@ fetch(birdsURL)
 
             birdCard.append(species, ul, age, size, button, editButton)
             document.body.append(birdCard)        
-        });
     }
 
 newBird.addEventListener('submit', (event)=> {
@@ -64,6 +62,7 @@ newBird.addEventListener('submit', (event)=> {
         },
         body: JSON.stringify(bird)
     })
+    newBird.reset()
 })
 
 editBird.addEventListener('submit', (event)=> {
@@ -85,6 +84,7 @@ editBird.addEventListener('submit', (event)=> {
         },
         body: JSON.stringify(bird)
     })
+    editBird.reset()
 })
 
 
